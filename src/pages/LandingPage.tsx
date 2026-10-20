@@ -1,9 +1,9 @@
 import Navbar from "../components/layouts/Navbar";
 import HeroSection from "../components/sections/HeroSection";
-import ContactForm from "../components/sections/ContactForm";
-import ContactInfo from "../components/sections/ContactInfo";
-import MapSection from "../components/sections/MapSection"; // Import Peta
-import DirectionInfo from "../components/sections/DirectionInfo"; // Import Petunjuk
+import GaleriPengajar from "../components/sections/GaleriPengajar"; // Ganti Form dengan Galeri
+import MapSection from "../components/sections/MapSection"; 
+import DirectionInfo from "../components/sections/DirectionInfo"; 
+import Footer from "../components/layouts/Footer"; // Gunakan komponen Footer agar rapi
 
 export default function LandingPage() {
   return (
@@ -11,21 +11,13 @@ export default function LandingPage() {
       <Navbar />
 
       <main className="flex-1 pb-16">
+        {/* 1. Hero Section (Tetap dipertahankan) */}
         <HeroSection />
         
-        {/* Area Form & Kontak */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <ContactForm />
-            </div>
-            <div className="lg:col-span-1">
-              <ContactInfo />
-            </div>
-          </div>
-        </section>
+        {/* 2. Galeri Pengajar (Menggantikan ContactForm & ContactInfo) */}
+        <GaleriPengajar />
 
-        {/* Area Peta & Petunjuk Arah */}
+        {/* 3. Area Peta & Petunjuk Arah (Tetap dipertahankan) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header Section Peta */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -58,9 +50,8 @@ export default function LandingPage() {
 
       </main>
 
-      <footer className="bg-slate-900 text-slate-300 py-8 text-center text-sm mt-auto">
-        <p>© {new Date().getFullYear()} Pondok Pesantren Al-Hikmah.</p>
-      </footer>
+      {/* Footer (Menggunakan komponen Footer yang ada) */}
+      <Footer />
     </div>
   );
 }
