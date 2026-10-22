@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase";
-import Navbar from "../components/layouts/Navbar"; // 1. Tambahkan Import Navbar
+import Navbar from "../components/layouts/Navbar";
 
 export default function PendaftaranPage() {
   const [loading, setLoading] = useState(false);
@@ -43,10 +43,13 @@ export default function PendaftaranPage() {
     setLoading(true);
 
     try {
+      // <-- TAMBAHAN BARU: Ambil data user yang sedang login -->
+      const { data: { user } } = await supabase.auth.getUser();
+
       let urlKK = "";
       let urlIjazah = "";
 
-      // 2. Perbaikan Upload KK: Bersihkan nama file dan tambahkan opsi upsert
+      // Upload KK
       if (fileKK) {
         const cleanNameKK = fileKK.name.replace(/[^a-zA-Z0-9.]/g, "_");
         const fileNameKK = `${Date.now()}_${cleanNameKK}`;
@@ -61,7 +64,7 @@ export default function PendaftaranPage() {
         urlKK = publicUrlKK.publicUrl;
       }
 
-      // 2. Perbaikan Upload Ijazah
+      // Upload Ijazah
       if (fileIjazah) {
         const cleanNameIjazah = fileIjazah.name.replace(/[^a-zA-Z0-9.]/g, "_");
         const fileNameIjazah = `${Date.now()}_${cleanNameIjazah}`;
@@ -83,14 +86,14 @@ export default function PendaftaranPage() {
           url_kk: urlKK,
           url_ijazah: urlIjazah,
           status: "Pending",
+          user_id: user ? user.id : null, // <-- TAMBAHAN BARU: Simpan ID User -->
         },
       ]);
 
       if (dbError) throw new Error("Gagal menyimpan data: " + dbError.message);
 
-      // Jika sukses
       setSuccess(true);
-      window.scrollTo(0, 0); // Scroll ke atas
+      window.scrollTo(0, 0);
 
     } catch (error: any) {
       alert(error.message);
@@ -103,7 +106,7 @@ export default function PendaftaranPage() {
   if (success) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
-        <Navbar /> {/* 3. Navbar di halaman sukses */}
+        <Navbar />
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="bg-white p-10 rounded-3xl shadow-lg text-center max-w-md w-full border border-slate-100">
             <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -113,8 +116,8 @@ export default function PendaftaranPage() {
             <p className="text-slate-500 mb-8 text-sm">
               Terima kasih telah mendaftar. Tim panitia PSB akan segera memverifikasi data Anda dan menghubungi melalui WhatsApp.
             </p>
-            <Link to="/" className="inline-block px-6 py-3 bg-blue-900 text-white font-semibold rounded-full hover:bg-blue-800 transition">
-              Kembali ke Beranda
+            <Link to="/profil-saya" className="inline-block px-6 py-3 bg-blue-900 text-white font-semibold rounded-full hover:bg-blue-800 transition">
+              Cek Status Pendaftaran
             </Link>
           </div>
         </div>
@@ -126,18 +129,16 @@ export default function PendaftaranPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       
-      <Navbar /> {/* 4. Navbar di halaman form */}
+      <Navbar />
       
       <div className="flex-1 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           
-          {/* Header Form */}
           <div className="text-center mb-10">
             <h1 className="text-3xl font-extrabold text-blue-950">Formulir Pendaftaran Santri Baru</h1>
             <p className="text-slate-500 mt-2">Tahun Ajaran 2025/2026</p>
           </div>
 
-          {/* Kartu Form */}
           <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
             
             {/* Bagian 1: Data Santri */}

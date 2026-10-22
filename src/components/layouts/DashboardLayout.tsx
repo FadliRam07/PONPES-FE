@@ -3,7 +3,7 @@ import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 import { 
   LayoutDashboard, 
-  UserPlus, // Ganti icon santri jadi UserPlus
+  UserPlus,
   UserCheck, 
   CalendarDays, 
   Megaphone, 

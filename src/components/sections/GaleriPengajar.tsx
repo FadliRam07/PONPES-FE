@@ -14,7 +14,6 @@ export default function GaleriPengajar() {
 
   useEffect(() => {
     const fetchUstadz = async () => {
-      // Mengambil semua ustadz yang aktif (limit dihapus agar semua muncul)
       const { data, error } = await supabase
         .from("ustadz")
         .select("id, nama, bidang_keahlian, foto_url")
