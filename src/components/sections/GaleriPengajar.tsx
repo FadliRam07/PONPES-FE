@@ -32,24 +32,23 @@ export default function GaleriPengajar() {
   if (loading || pengajar.length === 0) return null;
 
   return (
-    <section className="py-16 bg-slate-50">
+    <section className="py-12 md:py-16 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2">Tenaga Pendidik</p>
-          <h2 className="text-3xl font-bold text-blue-950">Ustadz & Pengajar Kami</h2>
-          <p className="text-slate-500 mt-2 max-w-xl mx-auto">Dididik oleh para asatidzah lulusan dalam dan luar negeri yang ahli di bidangnya.</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-blue-950">Ustadz & Pengajar Kami</h2>
+          <p className="text-sm md:text-base text-slate-500 mt-2 max-w-xl mx-auto">Dididik oleh para asatidzah lulusan dalam dan luar negeri yang ahli di bidangnya.</p>
         </div>
 
-        {/* Flexbox Wrapper: justify-center akan membuat kartu di tengah jika sedikit, dan flex-wrap akan melebarkan ke samping jika banyak */}
-        <div className="flex flex-wrap justify-center gap-6">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {pengajar.map((ustadz) => (
             <div 
               key={ustadz.id} 
-              // w-[calc(50%-12px)] untuk HP (2 kolom), md:w-[calc(25%-18px)] untuk Laptop (4 kolom)
-              className="w-full sm:w-[calc(50%-12px)] md:w-[calc(25%-18px)] lg:w-[calc(20%-20px)] bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 group hover:shadow-md transition"
+              // Lebar kartu: 2 kolom di HP, 3 kolom di Tablet, 4-5 kolom di Laptop
+              className="w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] md:w-[calc(25%-18px)] lg:w-[calc(20%-20px)] bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 group hover:shadow-md transition"
             >
               {/* Foto */}
-              <div className="h-64 w-full bg-slate-200 overflow-hidden">
+              <div className="h-48 sm:h-56 md:h-64 w-full bg-slate-200 overflow-hidden">
                 {ustadz.foto_url ? (
                   <img 
                     src={ustadz.foto_url} 
@@ -63,9 +62,9 @@ export default function GaleriPengajar() {
                 )}
               </div>
               {/* Info */}
-              <div className="p-5 text-center">
-                <h3 className="font-bold text-slate-900 text-lg">{ustadz.nama}</h3>
-                <p className="text-sm text-emerald-600 font-medium mt-1">{ustadz.bidang_keahlian}</p>
+              <div className="p-3 md:p-5 text-center">
+                <h3 className="font-bold text-slate-900 text-sm md:text-lg leading-tight line-clamp-2">{ustadz.nama}</h3>
+                <p className="text-[10px] md:text-sm text-emerald-600 font-medium mt-1 leading-tight">{ustadz.bidang_keahlian}</p>
               </div>
             </div>
           ))}

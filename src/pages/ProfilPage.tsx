@@ -4,6 +4,7 @@ import VisiMisi from "../components/sections/profil/VisiMisi";
 import PancaJiwa from "../components/sections/profil/PancaJiwa";
 import SambutanPengasuh from "../components/sections/profil/SambutanPengasuh";
 import TonggakPerjalanan from "../components/sections/profil/TonggakPerjalanan";
+import Footer from "../components/layouts/Footer"; // Tambahkan import ini
 
 export default function ProfilPage() {
   return (
@@ -16,11 +17,9 @@ export default function ProfilPage() {
         <SambutanPengasuh />
         <TonggakPerjalanan />
       </main>
-
-      {/* Footer Sederhana (Sementara) */}
-      <footer className="bg-slate-900 text-slate-300 py-8 text-center text-sm">
-        <p>© {new Date().getFullYear()} Pondok Pesantren Al-Hikmah. Terakreditasi Unggul (A).</p>
-      </footer>
+      
+      {/* Menggunakan komponen Footer yang sudah responsive */}
+      <Footer />
     </div>
   );
 }

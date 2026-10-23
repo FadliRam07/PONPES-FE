@@ -15,11 +15,13 @@ import UstadzPage from "../pages/dashboard/UstadzPage";
 import PsbPage from "../pages/dashboard/PsbPage";
 import JadwalPage from "../pages/dashboard/JadwalPage";
 import PengumumanPage from "../pages/dashboard/PengumumanPage";
+import KonsultasiPage from "../pages/dashboard/KonsultasiPage"; // IMPORT BARU
 
 // Halaman User / Pendaftar
 import RegisterPage from "../pages/user/RegisterPage";
 import LoginUserPage from "../pages/user/LoginUserPage";
 import ProfilUserPage from "../pages/user/ProfilUserPage";
+import RiwayatKonsultasiPage from "../pages/user/RiwayatKonsultasiPage"; // IMPORT BARU
 
 export const router = createBrowserRouter([
   // --- ROUTE PUBLIC ---
@@ -35,6 +37,7 @@ export const router = createBrowserRouter([
   { path: "/login-user", element: <LoginUserPage /> }, // Khusus User
   { path: "/register", element: <RegisterPage /> }, // Daftar Akun User
   { path: "/profil-saya", element: <ProfilUserPage /> }, // Status Pendaftaran User
+  { path: "/profil-saya/konsultasi", element: <RiwayatKonsultasiPage /> }, // RUTE BARU: Riwayat Konsultasi User
   
   // --- ROUTE ADMIN DASHBOARD ---
   { 
@@ -46,6 +49,7 @@ export const router = createBrowserRouter([
       { path: "ustadz", element: <UstadzPage /> }, 
       { path: "jadwal", element: <JadwalPage /> }, 
       { path: "pengumuman", element: <PengumumanPage /> }, 
+      { path: "konsultasi", element: <KonsultasiPage /> }, // RUTE BARU: Admin Konsultasi
     ]
   },
 

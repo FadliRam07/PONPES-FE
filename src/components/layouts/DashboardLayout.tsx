@@ -9,13 +9,17 @@ import {
   Megaphone, 
   LogOut,
   Bell,
-  Search
+  Search,
+  Menu,
+  X,
+  MessageSquare // IMPORT BARU UNTUK MENU KONSULTASI
 } from "lucide-react";
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [userEmail, setUserEmail] = useState<string>("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State Responsive HP
 
   useEffect(() => {
     const getUser = async () => {
@@ -26,6 +30,11 @@ export default function DashboardLayout() {
     };
     getUser();
   }, []);
+
+  // Tutup sidebar otomatis saat pindah halaman (di HP)
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -42,18 +51,41 @@ export default function DashboardLayout() {
     }`;
 
   return (
-    <div className="min-h-screen flex bg-slate-50 font-sans">
+    <div className="min-h-screen flex bg-slate-50 font-sans overflow-hidden">
       
+      {/* OVERLAY GELAP DI HP SAAT SIDEBAR TERBUKA */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-20 md:hidden transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* ================= SIDEBAR ================= */}
-      <aside className="w-64 bg-emerald-900 text-white flex flex-col fixed h-full z-10 shadow-xl">
-        <div className="h-20 flex items-center px-6 border-b border-emerald-800/50">
-          <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-emerald-900 font-bold mr-3">
-            AH
+      <aside 
+        className={`
+          fixed top-0 left-0 h-full w-64 bg-emerald-900 text-white flex flex-col z-30 shadow-xl transition-transform duration-300 ease-in-out
+          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+          md:translate-x-0
+        `}
+      >
+        <div className="h-20 flex items-center justify-between px-6 border-b border-emerald-800/50">
+          <div className="flex items-center">
+            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-emerald-900 font-bold mr-3">
+              AH
+            </div>
+            <div>
+              <h1 className="font-bold text-sm tracking-wide">AL-HIKMAH</h1>
+              <p className="text-[10px] text-emerald-200 tracking-widest">ADMIN PANEL</p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-bold text-sm tracking-wide">AL-HIKMAH</h1>
-            <p className="text-[10px] text-emerald-200 tracking-widest">ADMIN PANEL</p>
-          </div>
+          {/* Tombol Close Sidebar (Hanya muncul di HP) */}
+          <button 
+            onClick={() => setIsSidebarOpen(false)}
+            className="md:hidden text-emerald-200 hover:text-white"
+          >
+            <X className="w-6 h-6" />
+          </button>
         </div>
 
         <nav className="flex-1 px-4 py-6 space-y-2 text-sm font-medium overflow-y-auto">
@@ -64,7 +96,6 @@ export default function DashboardLayout() {
             Dashboard
           </Link>
           
-          {/* Menu PSB BARU */}
           <Link to="/dashboard/psb" className={menuClass("/dashboard/psb")}>
             <UserPlus className="w-5 h-5" />
             Pendaftaran PSB
@@ -84,6 +115,12 @@ export default function DashboardLayout() {
             <Megaphone className="w-5 h-5" />
             Pengumuman
           </Link>
+
+          {/* MENU BARU: PESAN KONSULTASI */}
+          <Link to="/dashboard/konsultasi" className={menuClass("/dashboard/konsultasi")}>
+            <MessageSquare className="w-5 h-5" />
+            Pesan Konsultasi
+          </Link>
         </nav>
 
         <div className="p-4 border-t border-emerald-800/50">
@@ -98,14 +135,24 @@ export default function DashboardLayout() {
       </aside>
 
       {/* ================= MAIN CONTENT ================= */}
-      <div className="flex-1 ml-64 flex flex-col min-h-screen">
-        <header className="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-0">
-          <div>
-            <h1 className="text-xl font-bold text-slate-800">Sistem Informasi</h1>
-            <p className="text-sm text-slate-500">Pondok Pesantren Al-Hikmah</p>
+      <div className="flex-1 md:ml-64 flex flex-col min-h-screen w-full transition-all duration-300">
+        <header className="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-8 sticky top-0 z-10">
+          <div className="flex items-center gap-3">
+            {/* Tombol Hamburger (Hanya muncul di HP) */}
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            
+            <div>
+              <h1 className="text-lg md:text-xl font-bold text-slate-800">Sistem Informasi</h1>
+              <p className="text-xs md:text-sm text-slate-500 hidden sm:block">Pondok Pesantren Al-Hikmah</p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 md:gap-6">
             <div className="relative hidden md:block">
               <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
               <input 
@@ -120,19 +167,19 @@ export default function DashboardLayout() {
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
 
-            <div className="flex items-center gap-3 border-l border-slate-200 pl-6">
+            <div className="flex items-center gap-3 border-l border-slate-200 pl-3 md:pl-6">
               <div className="text-right hidden md:block">
                 <p className="text-sm font-semibold text-slate-800">Administrator</p>
                 <p className="text-xs text-slate-500">{userEmail || "Memuat..."}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-800 font-bold">
+              <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-800 font-bold">
                 A
               </div>
             </div>
           </div>
         </header>
 
-        <main className="flex-1">
+        <main className="flex-1 p-4 md:p-0">
           <Outlet /> 
         </main>
       </div>

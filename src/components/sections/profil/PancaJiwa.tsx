@@ -43,36 +43,36 @@ export default function PancaJiwa() {
   ];
 
   return (
-    <section className="py-16 bg-slate-50">
+    <section className="py-12 md:py-16 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-8 md:mb-10">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+            <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
               Nilai Filosofis Santri
             </div>
-            <h2 className="text-3xl font-bold text-blue-950">Panca Jiwa Pondok Pesantren</h2>
-            <p className="text-slate-500 mt-2 max-w-2xl">
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-950">Panca Jiwa Pondok Pesantren</h2>
+            <p className="text-sm md:text-base text-slate-500 mt-2 max-w-2xl">
               Lima nilai fundamental yang menjadi ruh dan denyut nadi kehidupan seluruh warga Al-Hikmah Horizon, diwariskan lintas generasi.
             </p>
           </div>
-          <button className="text-sm font-semibold text-slate-700 border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-100 transition">
+          <button className="w-full md:w-auto text-sm font-semibold text-slate-700 border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-100 transition">
             Falsafah Hidup Bersama
           </button>
         </div>
 
         {/* Grid 5 Kartu */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {nilai.map((item, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between group hover:border-blue-300 transition">
+            <div key={index} className="bg-white rounded-2xl p-5 md:p-6 border border-slate-200 shadow-sm flex flex-col justify-between group hover:border-blue-300 transition">
               <div>
-                <div className="text-emerald-600 mb-6">
+                <div className="text-emerald-600 mb-4 md:mb-6">
                   {item.icon}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-blue-900 transition">{item.title}</h3>
-                <p className="text-xs text-slate-500 leading-relaxed mb-6">
+                <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2 md:mb-3 group-hover:text-blue-900 transition">{item.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed mb-4 md:mb-6">
                   {item.desc}
                 </p>
               </div>
